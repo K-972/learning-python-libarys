@@ -1,4 +1,11 @@
+import keyboard
+import time
 import numpy as np
+import sys
+
+
+
+
 
 
 
@@ -23,6 +30,67 @@ def write_highscore(new_highscore):
 ################################################################
 
 
+### generate enimies ###
+        
+def generate_enemy():
+    random_num = np.random.randint(1, 5)
+    if random_num == 1:
+        tl = 0 # top left
+        tm = 1 # top middle
+        tr = 1 # to right
+        ml = 0 # mid left
+        mm = 1 # mid mid
+        mr = 1 # mid right
+        bl = 0 # botton left
+        bm = 0 # bottom middle
+        br = 0 # bottom right
+    elif random_num == 2:
+        tl = 0 # top left
+        tm = 1 # top middle
+        tr = 0 # to right
+        ml = 1 # mid left
+        mm = 1 # mid mid
+        mr = 1 # mid right
+        bl = 0 # botton left
+        bm = 1 # bottom middle
+        br = 0 # bottom right
+    elif random_num == 3:
+        tl = 1 # top left
+        tm = 1 # top middle
+        tr = 1 # to right
+        ml = 1 # mid left
+        mm = 1 # mid mid
+        mr = 1 # mid right
+        bl = 0 # botton left
+        bm = 0 # bottom middle
+        br = 0 # bottom right
+    elif random_num == 4:
+        tl = 0 # top left
+        tm = 1 # top middle
+        tr = 1 # to right
+        ml = 1 # mid left
+        mm = 1 # mid mid
+        mr = 1 # mid right
+        bl = 0 # botton left
+        bm = 1 # bottom middle
+        br = 1 # bottom right
+    else:
+        tl = 0 # top left
+        tm = 0 # top middle
+        tr = 1 # to right
+        ml = 0 # mid left
+        mm = 1 # mid mid
+        mr = 1 # mid right
+        bl = 0 # botton left
+        bm = 0 # bottom middle
+        br = 1 # bottom right
+    return tl, tm, tr, ml, mm, mr, bl, br, bm
+
+def place_enemy():
+    tl, tm, tr, ml, mm, mr, bl, br, bm = generate_enemy()
+
+    # middle middle always has to be true
+     
 
 
 
@@ -60,14 +128,11 @@ def write_highscore(new_highscore):
 
 
 
-
-
-board = np.empty([10, 15])
 
 
 class mainmenu:
     def __init__(self):
-        self.highscore = highscore
+        self.highscore = get_highscore()
 
     def __str__(self):
         'loop for the main menu'
@@ -75,10 +140,25 @@ class mainmenu:
     def display(self, highscore):
         print('Welcome to thunderstruck. the best game ever')
         print(f'the current highscore is {highscore}')
+        print('press p to play')
+        print('a to see analytics')
+        print('Press q to quit')
+        menu_input = input('enter your choice >> ')
+        if menu_input.lower() == 'p':
+            #game_intro() # this will include call to main class
+            pass
+        elif menu_input.lower() == 'a':
+            pass
+            # this will have a section to show data i have collected
+        elif menu_input.lower() == 'q':
+            sys.exit()
+        else:
+            mainmenu.display(self, highscore)
 
 
 
-class gameloop:
+
+class gameloop: # every second it runs until 10 score hit then 0.7 at 20 it is 0.3. 
     def __init__(self):
         pass
 
@@ -97,8 +177,15 @@ if __name__ == '__main__':
     
     
     ################################################################
+    board = np.empty([10, 25])
     playerY = 5
     playerX = 1
+    enemies = []
 
 
-    
+    ################################################################
+
+
+    while gamestate == True:
+        time.sleep(0.5)
+        # here i will run the case called gameloop.
