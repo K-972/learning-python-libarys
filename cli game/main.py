@@ -1,6 +1,6 @@
 import keyboard
 import time
-import numpy as np
+import numpy
 import sys
 
 
@@ -33,7 +33,19 @@ def write_highscore(new_highscore):
 ### generate enimies ###
         
 def generate_enemy():
-    random_num = np.random.randint(1, 5)
+
+    '''
+
+    place position rules:
+
+    1 = cant be placed top row
+    2 = cant be placed bottom row
+    3 = cant be placed both top or bottom
+
+    '''
+
+    random_num = numpy.random.randint(1, 5)
+    # middle middle always has to be true
     if random_num == 1:
         tl = 0 # top left
         tm = 1 # top middle
@@ -44,6 +56,7 @@ def generate_enemy():
         bl = 0 # botton left
         bm = 0 # bottom middle
         br = 0 # bottom right
+        place_position = 1
     elif random_num == 2:
         tl = 0 # top left
         tm = 1 # top middle
@@ -54,6 +67,7 @@ def generate_enemy():
         bl = 0 # botton left
         bm = 1 # bottom middle
         br = 0 # bottom right
+        place_position = 3
     elif random_num == 3:
         tl = 1 # top left
         tm = 1 # top middle
@@ -64,6 +78,7 @@ def generate_enemy():
         bl = 0 # botton left
         bm = 0 # bottom middle
         br = 0 # bottom right
+        place_position = 2
     elif random_num == 4:
         tl = 0 # top left
         tm = 1 # top middle
@@ -74,6 +89,7 @@ def generate_enemy():
         bl = 0 # botton left
         bm = 1 # bottom middle
         br = 1 # bottom right
+        place_position = 3
     else:
         tl = 0 # top left
         tm = 0 # top middle
@@ -84,12 +100,38 @@ def generate_enemy():
         bl = 0 # botton left
         bm = 0 # bottom middle
         br = 1 # bottom right
-    return tl, tm, tr, ml, mm, mr, bl, br, bm
+        place_position = 3
+    return tl, tm, tr, ml, mm, mr, bl, br, bm, place_position
 
 def place_enemy():
-    tl, tm, tr, ml, mm, mr, bl, br, bm = generate_enemy()
+    tl, tm, tr, ml, mm, mr, bl, br, bm, place_position = generate_enemy()
 
-    # middle middle always has to be true
+
+
+    try:
+        if place_position == 1:
+            random_row = numpy.random.randint(2, 10)
+
+
+
+        elif place_position == 2:
+            random_row = numpy.random.randint(1, 9)
+
+
+
+        else:
+            random_row = numpy.random.randint(2,9)
+
+
+
+    except Exception as e:
+        with open('exception.txt', 'w', encoding='utf-8') as f:
+            f.write(e)
+
+
+
+
+
      
 
 
@@ -177,7 +219,8 @@ if __name__ == '__main__':
     
     
     ################################################################
-    board = np.empty([10, 25])
+    board = [[]]
+    print(board)
     playerY = 5
     playerX = 1
     enemies = []
